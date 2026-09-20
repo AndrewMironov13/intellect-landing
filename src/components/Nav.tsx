@@ -39,6 +39,12 @@ export function Nav() {
             {nav.map((n) => <a key={n.href} href={n.href} onClick={go(n.href)}>{n.label}</a>)}
           </nav>
           <div className="nav__right">
+            <div className="nav__quick" aria-label="Быстрая связь">
+              <a className="qbtn qbtn--phone" href={brand.phoneHref} aria-label={`Позвонить ${brand.phone}`} onClick={() => goal('phone', { where: 'nav-mobile' })}><Phone strokeWidth={2} /></a>
+              {messengerLinks('Хочу ').map((l) => (
+                <a key={l.id} className={`qbtn qbtn--${l.id}`} href={l.href} target="_blank" rel="noopener" aria-label={`Написать в ${l.label}`} onClick={() => goal('messenger', { which: l.id, where: 'nav-mobile' })}><MessengerIcon id={l.id} /></a>
+              ))}
+            </div>
             <a className="nav__phone" href={brand.phoneHref} onClick={() => goal('phone', { where: 'nav' })}>{brand.phone}</a>
             <a className="btn btn--ghost btn--sm nav__cta" href="#contact" onClick={go('#contact')}>Записаться</a>
             <button className="burger" aria-label="Открыть меню" aria-expanded={open} onClick={() => setOpen(true)}><span /></button>
