@@ -174,7 +174,7 @@ export const contact = {
 /** Каналы связи на сайте. Пусто = кнопка не показывается. Заполнить, когда Андрей пришлёт ссылки Ильи */
 export const channels = {
   telegram: 'MirWeba',
-  max: '',        // web.max.ru/<id> открывает экран входа, нужна ссылка «Поделиться профилем» из приложения вида https://max.ru/u/…
+  max: 'https://max.ru/u/f9LHodD0cOJjxTRx-z3mN-F4waZeqClPehBT_uOx9VixL4gyIbEiJClEP3M', // из QR «Поделиться профилем», профиль Андрея
   whatsapp: '',   // номер цифрами, например 79001234567
   prefill: 'Здравствуйте! Я с сайта Intellect. ',
 }
