@@ -3,7 +3,9 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/
 import { brand, nav } from '@/content'
 import { scrollTo } from '@/lib/lead'
 import { goal } from '@/lib/metrika'
-import { Messengers } from './Messengers'
+import { MessengerIcon } from './Messengers'
+import { messengerLinks } from '@/lib/channels'
+import { Phone } from 'lucide-react'
 
 export function Logo() {
   return (
@@ -57,9 +59,19 @@ export function Nav() {
                 <motion.a key={n.href} href={n.href} onClick={go(n.href)} variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}>{n.label}</motion.a>
               ))}
             </motion.div>
+            <div className="menu__actions" aria-label="Связаться">
+              <a className="action" href={brand.phoneHref} onClick={() => goal('phone', { where: 'menu' })}>
+                <span className="action__icon action__icon--phone"><Phone strokeWidth={2} /></span>
+                <b>Позвонить</b><small>{brand.phone}</small>
+              </a>
+              {messengerLinks('Хочу ').map((l) => (
+                <a key={l.id} className="action" href={l.href} target="_blank" rel="noopener" onClick={() => goal('messenger', { which: l.id, where: 'menu' })}>
+                  <span className={`action__icon action__icon--${l.id}`}><MessengerIcon id={l.id} /></span>
+                  <b>{l.label}</b><small>написать</small>
+                </a>
+              ))}
+            </div>
             <div className="menu__bottom">
-              <a className="btn btn--primary" href={brand.phoneHref} onClick={() => goal('phone', { where: 'menu' })}>{brand.phone}</a>
-              <Messengers extra="Хочу " />
               <span style={{ color: 'var(--muted)', fontSize: 14 }}>{brand.hours} · {brand.address}</span>
             </div>
           </motion.div>

@@ -104,13 +104,13 @@ h1, h2, h3, p { margin: 0; }
   .nav__links { display: flex; } .nav__phone, .nav__cta { display: inline-flex; } .burger { display: none; }
 }
 .menu {
-  position: fixed; inset: 0; z-index: 60; background: #141414;
-  display: flex; flex-direction: column; padding: 24px var(--gutter) 40px;
+  position: fixed; inset: 0; z-index: 60; background: #141414; height: 100dvh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  display: flex; flex-direction: column; padding: 24px var(--gutter) calc(28px + env(safe-area-inset-bottom));
 }
 .menu__top { display: flex; justify-content: space-between; align-items: center; height: 44px; }
 .menu__close { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; }
-.menu__list { display: grid; gap: 4px; margin-top: 40px; }
-.menu__list a { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 8vw, 40px); padding: 10px 0; border-bottom: 1px solid var(--line); }
+.menu__list { display: grid; gap: 2px; margin-top: 28px; }
+.menu__list a { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 6.4vw, 34px); padding: 9px 0; border-bottom: 1px solid var(--line); }
 .menu__bottom { margin-top: auto; display: grid; gap: 14px; }
 
 /* ---------- hero ---------- */
@@ -386,3 +386,17 @@ html.js [data-prerender] .hero { visibility: hidden; }
 .form__consent a { color: var(--accent); }
 .footer__legal { color: var(--dim); }
 .legal h1 { font-size: clamp(24px, 6.8vw, 56px); overflow-wrap: anywhere; hyphens: auto; }
+
+/* быстрые действия в мобильном меню */
+.menu__actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
+.action { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 14px 6px 12px; border: 1px solid var(--line-2); border-radius: 16px; background: rgba(255,255,255,.03); min-height: 44px; }
+.action:active { transform: scale(.97); }
+.action b { font-size: 14px; font-weight: 600; }
+.action small { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.action__icon { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.06); }
+.action__icon svg { width: 22px; height: 22px; }
+.action__icon--phone { background: var(--accent); color: var(--accent-ink); }
+.action__icon--telegram { color: #3fb3e8; background: rgba(63,179,232,.14); }
+.action__icon--max { color: var(--accent); background: rgba(46,200,198,.14); }
+.action__icon--whatsapp { color: #4fd36a; background: rgba(79,211,106,.14); }
+.menu__bottom { margin-top: 22px; }
