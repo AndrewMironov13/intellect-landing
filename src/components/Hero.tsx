@@ -13,7 +13,6 @@ export function Hero() {
   // отладочная ручка ?hero=genesis — примерить другое фото без правки контента
   const qs = new URLSearchParams(location.search)
   const heroPhoto = qs.get('hero') || hero.photo
-  const variant = qs.get('h') === 'b' ? 'b' : 'a'
   const host = useRef<HTMLElement>(null)
   const mx = useMotionValue(0), my = useMotionValue(0)
   const sx = useSpring(mx, { stiffness: 50, damping: 18, mass: 0.6 })
@@ -46,20 +45,12 @@ export function Hero() {
 
       <div className="container hero__body">
         <motion.p className="eyebrow hero__eyebrow" {...fade(0.25)}>{hero.eyebrow}</motion.p>
-        {variant === 'a' ? (
-          <motion.h1 className="h1 h1--a" variants={lines} initial={reduce ? 'show' : 'hidden'} animate="show">
-            {hero.words.map((w, i) => (
-              <span className="line" key={w}><motion.span variants={line} className={i === 2 ? 'h1__accent' : undefined}>{w}</motion.span></span>
-            ))}
-          </motion.h1>
-        ) : (
-          <motion.h1 className="h1 h1--b" variants={lines} initial={reduce ? 'show' : 'hidden'} animate="show">
-            {hero.lines.map((l) => (
-              <span className="line" key={l.k}><motion.span variants={line}><b>{l.k}</b><i aria-hidden="true"> — </i><span className="h1__v">{l.v}</span></motion.span></span>
-            ))}
-          </motion.h1>
-        )}
-        <motion.p className="hero__lead" {...fade(1.0)}>{variant === 'a' ? <><b>{hero.leadA}</b> {hero.leadA2}</> : hero.lead}</motion.p>
+        <motion.h1 className="h1 h1--a" variants={lines} initial={reduce ? 'show' : 'hidden'} animate="show">
+          {hero.words.map((w, i) => (
+            <span className="line" key={w}><motion.span variants={line} className={i === 2 ? 'h1__accent' : undefined}>{w}</motion.span></span>
+          ))}
+        </motion.h1>
+        <motion.p className="hero__lead" {...fade(1.0)}><b>{hero.leadA}</b> {hero.leadA2}</motion.p>
         <motion.div className="hero__cta" {...fade(1.15)}>
           <button className="btn btn--primary" onClick={() => scrollTo('constructor')}>{hero.primary} <ArrowRight /></button>
           <button className="btn btn--ghost" onClick={() => scrollTo('contact')}>{hero.secondary}</button>
