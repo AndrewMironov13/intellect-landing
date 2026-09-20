@@ -3,6 +3,22 @@
 Vite + React 19 + TypeScript, анимации `motion/react` (не framer-motion), иконки lucide.
 Стили — один файл `src/styles.css` с токенами. Весь текст, цены, контакты — `src/content.ts`.
 
+## Где живёт
+
+- Исходники: https://github.com/AndrewMironov13/intellect-landing (ветка `main`)
+- Демо на GitHub Pages: https://andrewmironov13.github.io/intellect-landing/ (ветка `gh-pages`, build_type legacy)
+
+Выкладка демо:
+
+```bash
+VITE_BASE=/intellect-landing VITE_SITE_URL=https://andrewmironov13.github.io VITE_NOINDEX=1 npm run build
+cd dist && touch .nojekyll && git init && git add -A && git commit -m deploy \
+  && git -c http.postBuffer=524288000 push -f https://github.com/AndrewMironov13/intellect-landing.git HEAD:gh-pages && rm -rf .git
+```
+
+`VITE_NOINDEX=1` = абсолютные og-ссылки для превью в мессенджерах, но `noindex` и `Disallow` (демо не индексируется).
+Без буфера пуш dist падал с HTTP 400.
+
 ## Запуск
 
 ```bash
