@@ -39,7 +39,9 @@ function seo(): Plugin {
   return {
     name: 'intellect-seo',
     configResolved(c) { outDir = c.build.outDir },
-    transformIndexHtml() {
+    transformIndexHtml(_html, ctx) {
+      const isMain = /(^|\/)index\.html$/.test(ctx.path || ctx.filename)
+      if (!isMain) return NOINDEX ? [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' }, injectTo: 'head' as const }] : []
       const tags: HtmlTagDescriptor[] = [
         { tag: 'link', attrs: { rel: 'preload', as: 'image', href: `${BASE}/photos/${hero.photo}.webp`, fetchpriority: 'high' }, injectTo: 'head' as const },
         { tag: 'meta', attrs: { property: 'og:image', content: abs('/og.jpg') }, injectTo: 'head' as const },
@@ -73,5 +75,5 @@ export default defineConfig(({ command }) => ({
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   server: { port: 5198, strictPort: true, host: '127.0.0.1' },
   preview: { port: 5198, strictPort: true },
-  build: { target: 'es2020', cssMinify: true, sourcemap: command === 'serve' },
+  build: { target: 'es2020', cssMinify: true, sourcemap: command === 'serve', rollupOptions: { input: { main: 'index.html', privacy: 'privacy.html' } } },
 }))

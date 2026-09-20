@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { CheckCircle2, MapPin } from 'lucide-react'
 import { brand, contact } from '@/content'
-import { photo } from '@/lib/asset'
+import { asset, photo } from '@/lib/asset'
 import { lead } from '@/lib/lead'
 import { Reveal } from './Reveal'
 import { Messengers } from './Messengers'
@@ -75,7 +75,7 @@ export function Contact() {
                   <input className="hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                   <button className="btn btn--primary" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Отправляем…' : 'Записаться на осмотр'}</button>
                   {status === 'error' && <p style={{ color: '#ff9b9b', fontSize: 14 }}>Не отправилось. Позвоните нам: <a href={brand.phoneHref}>{brand.phone}</a></p>}
-                  <p className="form__consent">{contact.consent}</p>
+                  <label className="form__consent"><input type="checkbox" name="consent" required /><span>{contact.consent}<a href={asset(contact.privacyPath)} target="_blank" rel="noopener">{contact.consentLink}</a></span></label>
                 </motion.form>
               )}
             </AnimatePresence>

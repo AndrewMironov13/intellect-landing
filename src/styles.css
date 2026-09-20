@@ -370,3 +370,18 @@ h1, h2, h3, p { margin: 0; }
 
 /* пререндер: до старта React прячем hero, чтобы текст не показывался дважды (краулеры без JS видят всё) */
 html.js [data-prerender] .hero { visibility: hidden; }
+
+/* юридические страницы */
+.legal { padding: calc(var(--nav-h) + 48px) 0 80px; }
+.legal__inner { max-width: 760px; }
+.legal__meta { color: var(--muted); margin-top: 14px; font-size: 15px; }
+.legal h2 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin: 40px 0 12px; }
+.legal p, .legal li { color: #d6d6d6; font-size: 16px; line-height: 1.65; }
+.legal p + p { margin-top: 12px; }
+.legal ul { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+.legal a { color: var(--accent); }
+.legal__back { margin-top: 48px; }
+.form__consent { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.form__consent input { margin: 2px 0 0; width: 16px; height: 16px; accent-color: var(--accent); flex: none; }
+.form__consent a { color: var(--accent); }
+.footer__legal { color: var(--dim); }
