@@ -147,11 +147,11 @@ h1, h2, h3, p { margin: 0; }
 @media (min-width: 760px) { .hero__facts { grid-template-columns: repeat(3, auto); justify-content: start; gap: 44px; } }
 @media (max-width: 759px) {
   .hero { min-height: auto; }
-  .hero__photo { position: relative; height: 46svh; min-height: 300px; }
-  .hero__photo img { object-position: 50% 88%; }
-  .hero__photo::after { background: linear-gradient(180deg, rgba(20,20,20,.5) 0%, rgba(20,20,20,0) 35%, rgba(20,20,20,.2) 70%, var(--bg) 100%); }
-  .hero__body { padding-top: 8px; margin-top: -60px; }
-  .hero__lattice { height: 46svh; min-height: 300px; }
+  .hero__photo { position: relative; height: 62svh; min-height: 360px; }
+  .hero__photo img { object-position: 50% 30%; }
+  .hero__photo::after { background: linear-gradient(180deg, rgba(20,20,20,.45) 0%, rgba(20,20,20,0) 30%, rgba(20,20,20,.15) 62%, var(--bg) 100%); }
+  .hero__body { padding-top: 8px; margin-top: -110px; }
+  .hero__lattice { height: 62svh; min-height: 360px; }
 }
 
 /* ---------- ticker ---------- */
