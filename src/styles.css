@@ -136,14 +136,15 @@ h1, h2, h3, p { margin: 0; }
 .h1 b { color: var(--accent); }
 .h1 i { font-style: normal; color: var(--dim); }
 @media (min-width: 760px) {
-  .h1 { font-size: clamp(27px, 2.85vw, 42px); max-width: none; line-height: 1.1; }
-  .h1 .line > span { display: grid; grid-template-columns: 3.5em auto 1fr; align-items: center; column-gap: 14px; }
-  .h1 b { font-size: .32em; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; line-height: 1; padding-top: .12em; }
-  .h1 i { display: block; width: 26px; height: 2px; background: var(--accent); opacity: .55; font-size: 0; }
-  .h1__v { white-space: normal; }
-  .h1 .line + .line { margin-top: 8px; }
+  .h1--b { font-size: clamp(24px, 2.3vw, 33px); max-width: none; line-height: 1.15; }
+  .h1--b b { color: var(--accent); font-weight: inherit; }
+  .h1--b i { color: var(--dim); }
+  .h1--b .line + .line { margin-top: 4px; }
 }
-.hero__lead { margin-top: 26px; max-width: 46ch; font-size: clamp(16px, 1.35vw, 19px); color: #d6d6d6; }
+.h1--a { font-size: clamp(40px, 5.6vw, 84px); line-height: 0.98; letter-spacing: -0.03em; max-width: none; }
+.h1--a .h1__accent { color: var(--accent); }
+.h1--a .line + .line { margin-top: .02em; }
+.hero__lead { margin-top: 26px; max-width: 52ch; font-size: clamp(16px, 1.35vw, 19px); color: #d6d6d6; }
 .hero__lead b { color: #fff; font-weight: 600; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .hero__facts {
@@ -424,9 +425,10 @@ html.js [data-prerender] .hero { visibility: hidden; }
 @media (max-width: 400px) { .logo { font-size: 19px; } .nav__inner { gap: 10px; } .nav__right { gap: 10px; } }
 
 @media (max-width: 759px) {
-  .h1 { font-size: clamp(26px, 7.6vw, 34px); }
-  .h1 .line > span { white-space: normal; }
-  .h1 i { display: none; }
-  .h1 b { display: block; font-size: .5em; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; font-weight: 700; }
-  .h1 .line + .line { margin-top: 12px; }
+  .h1--b { font-size: clamp(26px, 7.6vw, 34px); }
+  .h1--b .line > span { white-space: normal; }
+  .h1--b i { display: none; }
+  .h1--b b { display: block; font-size: .5em; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; font-weight: 700; color: var(--accent); }
+  .h1--b .line + .line { margin-top: 12px; }
+  .h1--a { font-size: clamp(40px, 12.4vw, 52px); }
 }
