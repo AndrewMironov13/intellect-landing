@@ -136,12 +136,12 @@ h1, h2, h3, p { margin: 0; }
 .h1 b { color: var(--accent); }
 .h1 i { font-style: normal; color: var(--dim); }
 @media (min-width: 760px) {
-  .h1 { font-size: clamp(28px, 3vw, 44px); max-width: none; line-height: 1.08; }
-  .h1 .line > span { display: flex; align-items: baseline; gap: 14px; }
-  .h1 b { flex: none; width: 7.6em; font-size: .34em; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
-  .h1 i { flex: none; font-weight: 400; }
+  .h1 { font-size: clamp(27px, 2.85vw, 42px); max-width: none; line-height: 1.1; }
+  .h1 .line > span { display: grid; grid-template-columns: 3.5em auto 1fr; align-items: center; column-gap: 14px; }
+  .h1 b { font-size: .32em; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; line-height: 1; padding-top: .12em; }
+  .h1 i { display: block; width: 26px; height: 2px; background: var(--accent); opacity: .55; font-size: 0; }
   .h1__v { white-space: normal; }
-  .h1 .line + .line { margin-top: 6px; }
+  .h1 .line + .line { margin-top: 8px; }
 }
 .hero__lead { margin-top: 26px; max-width: 46ch; font-size: clamp(16px, 1.35vw, 19px); color: #d6d6d6; }
 .hero__lead b { color: #fff; font-weight: 600; }
@@ -420,7 +420,7 @@ html.js [data-prerender] .hero { visibility: hidden; }
 .qbtn--whatsapp { color: #4fd36a; }
 .qbtn:active { transform: scale(.94); }
 .burger { width: 40px; height: 40px; }
-@media (min-width: 980px) { .nav__quick { display: none; } }
+@media (min-width: 980px) { .qbtn--phone { display: none; } .nav__quick { order: 1; } .nav__phone { order: 0; } .nav__cta { order: 2; } }
 @media (max-width: 400px) { .logo { font-size: 19px; } .nav__inner { gap: 10px; } .nav__right { gap: 10px; } }
 
 @media (max-width: 759px) {
