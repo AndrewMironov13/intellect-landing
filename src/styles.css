@@ -129,11 +129,20 @@ h1, h2, h3, p { margin: 0; }
 .hero__eyebrow { margin-bottom: 22px; }
 .h1 {
   font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.04;
-  font-size: clamp(34px, 4.2vw, 60px); max-width: 18ch;
+  font-size: clamp(30px, 3.6vw, 52px); max-width: 26ch;
 }
 .h1 .line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
 .h1 .line > span { display: block; will-change: transform; }
-.h1 .line:nth-child(3) > span { color: var(--accent); }
+.h1 b { color: var(--accent); }
+.h1 i { font-style: normal; color: var(--dim); }
+@media (min-width: 760px) {
+  .h1 { font-size: clamp(28px, 3vw, 44px); max-width: none; line-height: 1.08; }
+  .h1 .line > span { display: flex; align-items: baseline; gap: 14px; }
+  .h1 b { flex: none; width: 7.6em; font-size: .34em; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+  .h1 i { flex: none; font-weight: 400; }
+  .h1__v { white-space: normal; }
+  .h1 .line + .line { margin-top: 6px; }
+}
 .hero__lead { margin-top: 26px; max-width: 46ch; font-size: clamp(16px, 1.35vw, 19px); color: #d6d6d6; }
 .hero__lead b { color: #fff; font-weight: 600; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
@@ -358,7 +367,7 @@ h1, h2, h3, p { margin: 0; }
       linear-gradient(180deg, rgba(20,20,20,.35) 0%, rgba(20,20,20,0) 30%, rgba(20,20,20,.08) 70%, var(--bg) 100%),
       linear-gradient(90deg, var(--bg) 0%, rgba(20,20,20,.6) 20%, rgba(20,20,20,0) 46%);
   }
-  .hero__body > * { max-width: 60%; }
+  .hero__body > * { max-width: 64%; }
   .hero__lattice { -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.85) 40%, rgba(0,0,0,.25) 62%, rgba(0,0,0,.1) 100%); mask-image: linear-gradient(90deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.85) 40%, rgba(0,0,0,.25) 62%, rgba(0,0,0,.1) 100%); }
 }
 
@@ -413,3 +422,11 @@ html.js [data-prerender] .hero { visibility: hidden; }
 .burger { width: 40px; height: 40px; }
 @media (min-width: 980px) { .nav__quick { display: none; } }
 @media (max-width: 400px) { .logo { font-size: 19px; } .nav__inner { gap: 10px; } .nav__right { gap: 10px; } }
+
+@media (max-width: 759px) {
+  .h1 { font-size: clamp(26px, 7.6vw, 34px); }
+  .h1 .line > span { white-space: normal; }
+  .h1 i { display: none; }
+  .h1 b { display: block; font-size: .5em; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; font-weight: 700; }
+  .h1 .line + .line { margin-top: 12px; }
+}

@@ -58,7 +58,7 @@ async def main():
             await asyncio.sleep(5)  # отложенные картинки ставят src через 3,5 с
             r = await cmd('Runtime.evaluate', expression="(()=>{const r=document.getElementById('root'); if(!r||!r.children.length) return ''; return r.innerHTML})()", returnByValue=True)
             html = r.get('result', {}).get('value', '')
-            if not html or 'Кузов' not in html: sys.exit('пререндер: страница не отрендерилась')
+            if not html or 'Оклейка' not in html: sys.exit('пререндер: страница не отрендерилась')
     finally:
         chrome.send_signal(signal.SIGTERM); srv.send_signal(signal.SIGTERM)
         chrome.wait(timeout=5); srv.wait(timeout=5)

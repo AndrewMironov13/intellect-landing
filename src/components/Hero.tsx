@@ -46,7 +46,7 @@ export function Hero() {
         <motion.p className="eyebrow hero__eyebrow" {...fade(0.25)}>{hero.eyebrow}</motion.p>
         <motion.h1 className="h1" variants={lines} initial={reduce ? 'show' : 'hidden'} animate="show">
           {hero.lines.map((l) => (
-            <span className="line" key={l}><motion.span variants={line}>{l}</motion.span></span>
+            <span className="line" key={l.k}><motion.span variants={line}><b>{l.k}</b><i aria-hidden="true"> — </i><span className="h1__v">{l.v}</span></motion.span></span>
           ))}
         </motion.h1>
         <motion.p className="hero__lead" {...fade(1.0)}>{hero.lead}</motion.p>
