@@ -15,9 +15,9 @@ export function Reviews() {
           <div className="head head--split">
             <div>
               <p className="eyebrow">Отзывы</p>
-              <h2 className="h2" style={{ marginTop: 16 }}>Что пишут на Яндекс Картах</h2>
+              <h2 className="h2" style={{ marginTop: 16 }}>Наши отзывы на Яндекс Картах</h2>
             </div>
-            <p className="lead">Приезжают за тонировкой и плёнкой на детали, в отзывах чаще всего отмечают скорость и цены</p>
+            <p className="lead">Чаще всего к нам едут за тонировкой и плёнкой на детали. Ниже — отзывы с нашей карточки на Картах, там же можно оставить свой</p>
           </div>
         </Reveal>
         <motion.div className="stats" initial={reduce ? 'show' : 'hidden'} whileInView="show" viewport={{ once: true, margin: '0px 0px -80px 0px' }} variants={{ show: { transition: { staggerChildren: 0.1 } } }}>

@@ -68,7 +68,7 @@ for (const p of servicePages) {
         <h2 class="page__h2">Как проходит</h2>
         <ol class="page__steps">${p.steps.map((s) => `<li>${s}</li>`).join('')}</ol>
 
-        <h2 class="page__h2">Отзывы клиентов</h2>
+        <h2 class="page__h2">Отзывы о нас</h2>
         <div class="page__reviews">${revs.map((r) => `<blockquote class="review"><div class="review__head"><div><div class="review__name">${r.name}</div><div class="review__date">${r.date}</div></div><div class="review__stars" aria-label="5 из 5">★★★★★</div></div><p class="review__text">${r.text}</p></blockquote>`).join('')}</div>
         <p class="page__note"><a href="https://yandex.ru/maps/?text=${encodeURIComponent(brand.mapsQuery)}" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a> — рейтинг ${brand.rating}</p>
 
