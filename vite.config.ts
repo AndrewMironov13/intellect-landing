@@ -1,7 +1,7 @@
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
-import { writeFileSync, mkdirSync } from 'node:fs'
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs'
 import { join, basename } from 'node:path'
 import { brand, hero, mainServices, moreServices, promo, seo, faq, servicePages, reviews } from './src/content.ts'
 
@@ -76,6 +76,13 @@ function seoPlugin(): Plugin {
       meta({ name: 'geo.region', content: 'RU-NIZ' }); meta({ name: 'geo.placename', content: brand.city }); meta({ name: 'geo.position', content: `${seo.geo.lat};${seo.geo.lon}` }); meta({ name: 'ICBM', content: `${seo.geo.lat}, ${seo.geo.lon}` })
       if (file === 'index.html') {
         html = html.replace(/__TITLE__/g, seo.title).replace(/__DESC__/g, seo.description)
+        // пререндер для краулеров без JS: фрагмент собирается локально (npm run prerender) и коммитится
+        if (process.env.PRERENDER_SKIP !== '1' && existsSync('prerender/root.html')) {
+          const frag = readFileSync('prerender/root.html', 'utf8').replace(/__BASE__/g, BASE)
+          html = html.replace('<div id="root"></div>', `<div id="root"><div data-prerender>${frag}</div></div>`)
+        } else if (process.env.PRERENDER_SKIP !== '1') {
+          this.warn('prerender/root.html не найден — краулеры без JS увидят пустую страницу. Запусти npm run prerender')
+        }
         meta({ name: 'keywords', content: seo.keywords })
         tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'image', href: `${BASE}/photos/${hero.photo}.webp`, fetchpriority: 'high' }, injectTo: 'head' })
         tags.push({ tag: 'script', attrs: { type: 'application/ld+json' }, children: graph([business(), faqLd(faq)]), injectTo: 'head' })

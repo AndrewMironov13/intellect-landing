@@ -3,6 +3,15 @@
 Vite + React 19 + TypeScript, анимации `motion/react` (не framer-motion), иконки lucide.
 Стили — один файл `src/styles.css` с токенами. Весь текст, цены, контакты — `src/content.ts`.
 
+## Выкладка на Timeweb Cloud App Platform (боевой домен)
+
+- Тип Frontend, команда `npm run build`, **каталог сборки `dist`** (пресет React подставляет `build` — ловушка), Node 24.
+- Переменные окружения: `VITE_SITE_URL=https://домен` и больше ничего (`VITE_BASE`/`VITE_NOINDEX` — только для демо на GitHub Pages).
+- Chrome на хостинге не нужен: пререндер лежит в репозитории (`prerender/root.html`, base-путь заменён токеном
+  `__BASE__`), vite-плагин вшивает его в `index.html`. **После любой правки контента запускать локально
+  `npm run prerender` и коммитить обновлённый `prerender/root.html`**, иначе краулеры без JS увидят старый текст.
+- `.env.example` — образец переменных.
+
 ## Где живёт
 
 - Исходники: https://github.com/AndrewMironov13/intellect-landing (ветка `main`)

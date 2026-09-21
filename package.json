@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/gen-pages.mjs && vite",
-    "build": "node scripts/gen-pages.mjs && tsc -b && vite build && python3 scripts/prerender.py dist",
+    "build": "node scripts/gen-pages.mjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "build:nopre": "node scripts/gen-pages.mjs && tsc -b && vite build",
-    "pages": "node scripts/gen-pages.mjs"
+    "pages": "node scripts/gen-pages.mjs",
+    "prerender": "node scripts/gen-pages.mjs && tsc -b && PRERENDER_SKIP=1 vite build && python3 scripts/prerender.py dist"
   },
   "dependencies": {
     "lucide-react": "^1.47.0",

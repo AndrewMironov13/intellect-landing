@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Пререндер SPA для краулеров без JavaScript.
+Запускать ЛОКАЛЬНО после изменения контента: `npm run prerender`. Результат prerender/root.html
+коммитится, а сборка на хостинге (без Chrome) просто вшивает его через vite-плагин.
 Поднимает статический сервер на dist/, открывает страницу в headless Chrome с
 prefers-reduced-motion (анимации входа отключены, весь контент видим), ждёт
 догрузку отложенных картинок и вшивает innerHTML #root в dist/index.html.
@@ -64,10 +66,15 @@ async def main():
         chrome.wait(timeout=5); srv.wait(timeout=5)
         shutil.rmtree(prof, ignore_errors=True)
         if serve_dir != root: shutil.rmtree(serve_dir, ignore_errors=True)
+    # фрагмент не зависит от base-пути хостинга: base заменяем токеном, плагин подставит свой
+    base_prefix = BASE.rstrip('/')
+    frag = html.replace(f'src="{base_prefix}/', 'src="__BASE__/').replace(f'href="{base_prefix}/', 'href="__BASE__/') if base_prefix else html.replace('src="/', 'src="__BASE__/').replace('href="/', 'href="__BASE__/')
+    os.makedirs('prerender', exist_ok=True)
+    open(os.path.join('prerender', 'root.html'), 'w', encoding='utf-8').write(frag)
     idx = os.path.join(root, 'index.html'); s = open(idx, encoding='utf-8').read()
-    if '<div id="root"></div>' not in s: sys.exit('index.html: не нашла пустой #root')
-    s = s.replace('<div id="root"></div>', f'<div id="root"><div data-prerender>{html}</div></div>')
-    open(idx, 'w', encoding='utf-8').write(s)
-    print(f'пререндер: {len(html)//1024} КБ разметки вшито в {idx}')
+    if '<div id="root"></div>' in s:
+        s = s.replace('<div id="root"></div>', f'<div id="root"><div data-prerender>{html}</div></div>')
+        open(idx, 'w', encoding='utf-8').write(s)
+    print(f'пререндер: {len(html)//1024} КБ → prerender/root.html (и вшито в {idx})')
 
 asyncio.run(main())
