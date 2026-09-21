@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs'
 import { join, basename } from 'node:path'
-import { brand, hero, mainServices, moreServices, promo, seo, faq, servicePages, reviews } from './src/content.ts'
+import { brand, hero, mainServices, moreServices, promo, seo, faq, servicePages, reviews, metrika } from './src/content.ts'
 
 const BASE = (process.env.VITE_BASE ?? '/').replace(/\/$/, '')
 const SITE = (process.env.VITE_SITE_URL ?? '').replace(/\/$/, '')
@@ -71,6 +71,10 @@ function seoPlugin(): Plugin {
       if (page && SITE) {
         meta({ property: 'og:url', content: abs(page.path) })
         if (!NOINDEX) tags.push({ tag: 'link', attrs: { rel: 'canonical', href: abs(page.path) }, injectTo: 'head' })
+      }
+      if (metrika.id) {
+        tags.push({ tag: 'noscript', children: `<div><img src="https://mc.yandex.ru/watch/${metrika.id}" style="position:absolute;left:-9999px" alt="" /></div>`, injectTo: 'body-prepend' })
+        if (file !== 'index.html') tags.push({ tag: 'script', children: `if(!['localhost','127.0.0.1'].includes(location.hostname)){(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=${metrika.id}','ym');ym(${metrika.id},'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});}`, injectTo: 'head' })
       }
       if (file === 'privacy.html') return { html, tags }
       meta({ property: 'og:image', content: abs('/og.jpg') }); meta({ property: 'og:image:width', content: '1200' }); meta({ property: 'og:image:height', content: '630' })

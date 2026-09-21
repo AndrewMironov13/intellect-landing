@@ -189,7 +189,7 @@ export const channels = {
 }
 
 /** Номер счётчика Яндекс Метрики. 0 = не подключать. На localhost не грузится никогда */
-export const metrika = { id: 0 }
+export const metrika = { id: 112879449 }
 
 export const about = {
   title: 'Автостудия Intellect в Нижнем Новгороде',

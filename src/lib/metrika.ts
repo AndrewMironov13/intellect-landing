@@ -15,7 +15,7 @@ export function initMetrika() {
   const w = window as Window & { ym: ((...a: unknown[]) => void) & { a?: unknown[]; l?: number } }
   w.ym = w.ym || function (...args: unknown[]) { (w.ym.a = w.ym.a || []).push(args) }
   w.ym.l = Date.now()
-  const s = document.createElement('script'); s.async = true; s.src = 'https://mc.yandex.ru/metrika/tag.js'
+  const s = document.createElement('script'); s.async = true; s.src = `https://mc.yandex.ru/metrika/tag.js?id=${metrika.id}`
   document.head.appendChild(s)
-  w.ym(metrika.id, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true })
+  w.ym(metrika.id, 'init', { ssr: true, webvisor: true, clickmap: true, referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true })
 }

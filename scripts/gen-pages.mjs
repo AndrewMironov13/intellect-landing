@@ -36,9 +36,9 @@ for (const p of servicePages) {
         <nav class="nav__links" aria-label="Услуги">${servicePages.map((o) => `<a href="./${o.slug}.html"${o.slug === p.slug ? ' aria-current="page"' : ''}>${o.nav}</a>`).join('')}<a href="./#works">Работы</a><a href="./#reviews">Отзывы</a></nav>
         <div class="nav__right">
           <div class="nav__quick" aria-label="Быстрая связь">
-            <a class="qbtn qbtn--phone" href="${brand.phoneHref}" aria-label="Позвонить ${brand.phone}">${icon.phone}</a>
-            ${channels.max ? `<a class="qbtn qbtn--max" href="${channels.max}" target="_blank" rel="noopener" aria-label="Написать в Max">${icon.max}</a>` : ''}
-            ${tg ? `<a class="qbtn qbtn--telegram" href="${tg}" target="_blank" rel="noopener" aria-label="Написать в Telegram">${icon.telegram}</a>` : ''}
+            <a class="qbtn qbtn--phone" href="${brand.phoneHref}" aria-label="Позвонить ${brand.phone}" onclick="window.ym&&ym(112879449,'reachGoal','phone')">${icon.phone}</a>
+            ${channels.max ? `<a class="qbtn qbtn--max" href="${channels.max}" target="_blank" rel="noopener" aria-label="Написать в Max" onclick="window.ym&&ym(112879449,'reachGoal','messenger')">${icon.max}</a>` : ''}
+            ${tg ? `<a class="qbtn qbtn--telegram" href="${tg}" target="_blank" rel="noopener" aria-label="Написать в Telegram" onclick="window.ym&&ym(112879449,'reachGoal','messenger')">${icon.telegram}</a>` : ''}
           </div>
           <a class="nav__phone" href="${brand.phoneHref}">${brand.phone}</a>
           <a class="btn btn--ghost btn--sm nav__cta" href="./#contact">Записаться</a>
@@ -53,7 +53,7 @@ for (const p of servicePages) {
         <p class="lead page__lead">${p.lead}</p>
         <div class="page__cta">
           <a class="btn btn--primary" href="./#contact">Записаться на осмотр</a>
-          <a class="btn btn--ghost" href="${brand.phoneHref}">${brand.phone}</a>
+          <a class="btn btn--ghost" href="${brand.phoneHref}" onclick="window.ym&&ym(112879449,'reachGoal','phone')">${brand.phone}</a>
         </div>
         ${p.intro.map((t) => `<p class="page__p">${t}</p>`).join('\n        ')}
 
@@ -78,7 +78,7 @@ for (const p of servicePages) {
         <div class="page__final">
           <h2 class="page__h2">Запишитесь на осмотр</h2>
           <p class="page__p">Посмотрим машину, назовём точную цену и срок. Бокс — ${brand.address}, ${brand.metro}. ${brand.hours}</p>
-          <div class="page__cta"><a class="btn btn--primary" href="./#contact">Оставить заявку</a><a class="btn btn--ghost" href="${brand.phoneHref}">Позвонить ${brand.phone}</a></div>
+          <div class="page__cta"><a class="btn btn--primary" href="./#contact">Оставить заявку</a><a class="btn btn--ghost" href="${brand.phoneHref}" onclick="window.ym&&ym(112879449,'reachGoal','phone')">Позвонить ${brand.phone}</a></div>
           <p class="page__note">Другие услуги: ${others.map((o) => `<a href="./${o.slug}.html">${o.nav.toLowerCase()}</a>`).join(', ')}, <a href="./#services">все услуги и цены</a></p>
         </div>
       </div>
