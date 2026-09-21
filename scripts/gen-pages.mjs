@@ -83,7 +83,7 @@ for (const p of servicePages) {
         </div>
       </div>
     </main>
-    <footer class="footer"><div class="container footer__inner"><a href="./" class="logo"><span class="logo__mark">intellect</span><span class="logo__dot" aria-hidden="true"></span></a><span>${brand.legal} · ${brand.city}, ${brand.address}</span><span><a href="${brand.phoneHref}">${brand.phone}</a> · <a href="${brand.vk}" target="_blank" rel="noopener">ВКонтакте</a></span><a class="footer__legal" href="./privacy.html">Политика конфиденциальности</a></div></footer>
+    <footer class="footer"><div class="container footer__inner"><a href="./" class="logo"><span class="logo__mark">intellect</span><span class="logo__dot" aria-hidden="true"></span></a><span>${brand.legal}${brand.inn ? `, ИНН ${brand.inn}` : ''} · ${brand.city}, ${brand.address}</span><span><a href="${brand.phoneHref}">${brand.phone}</a> · <a href="${brand.vk}" target="_blank" rel="noopener">ВКонтакте</a></span><a class="footer__legal" href="./privacy.html">Политика конфиденциальности</a></div></footer>
     <script type="module" src="/src/privacy.ts"></script>
   </body>
 </html>

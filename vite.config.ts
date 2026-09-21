@@ -66,6 +66,8 @@ function seoPlugin(): Plugin {
       const tags: HtmlTagDescriptor[] = []
       const meta = (attrs: Record<string, string>) => tags.push({ tag: 'meta', attrs, injectTo: 'head' })
       if (NOINDEX) meta({ name: 'robots', content: 'noindex, nofollow' })
+      if (seo.yandexVerification) meta({ name: 'yandex-verification', content: seo.yandexVerification })
+      if (seo.googleVerification) meta({ name: 'google-site-verification', content: seo.googleVerification })
       if (page && SITE) {
         meta({ property: 'og:url', content: abs(page.path) })
         if (!NOINDEX) tags.push({ tag: 'link', attrs: { rel: 'canonical', href: abs(page.path) }, injectTo: 'head' })
