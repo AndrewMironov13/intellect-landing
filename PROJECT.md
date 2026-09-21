@@ -15,7 +15,8 @@ Vite + React 19 + TypeScript, анимации `motion/react` (не framer-motio
 ## Где живёт
 
 - Исходники: https://github.com/AndrewMironov13/intellect-landing (ветка `main`)
-- **Боевой сайт: https://intellectdetailing.ru** (Timeweb App Platform, приложение «Cute Grosbeak» на аккаунте Андрея ms081097, репозиторий по URL без автодеплоя — после push нажимать «Деплой» в панели)
+- **Боевой сайт: https://intellectdetailing.ru** (Timeweb App Platform, app_id 257841 «Cute Grosbeak», аккаунт Андрея ms081097, IP 178.209.127.53). Репозиторий подключён по URL, автодеплоя нет.
+- **Деплой после push:** `source ~/.zshrc && scripts/deploy.sh` (MCP Timeweb, токен `TIMEWEB_TOKEN` в ~/.zshrc). В Claude Code тот же MCP зарегистрирован как `timeweb-cloud` (user scope), инструменты `search_tools` → `get_tool_definition` → `execute_tool`, tool_id `create_app_deploy` / `list_app_deploys` / `get_app_deploy_logs`, полный 40-символьный SHA, два шага с confirm_token.
 - Демо на GitHub Pages заменено редиректом на боевой домен (ветка `gh-pages`)
 
 Выкладка демо:
