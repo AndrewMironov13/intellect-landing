@@ -15,7 +15,8 @@ Vite + React 19 + TypeScript, анимации `motion/react` (не framer-motio
 ## Где живёт
 
 - Исходники: https://github.com/AndrewMironov13/intellect-landing (ветка `main`)
-- Демо на GitHub Pages: https://andrewmironov13.github.io/intellect-landing/ (ветка `gh-pages`, build_type legacy)
+- **Боевой сайт: https://intellectdetailing.ru** (Timeweb App Platform, приложение «Cute Grosbeak» на аккаунте Андрея ms081097, репозиторий по URL без автодеплоя — после push нажимать «Деплой» в панели)
+- Демо на GitHub Pages заменено редиректом на боевой домен (ветка `gh-pages`)
 
 Выкладка демо:
 
