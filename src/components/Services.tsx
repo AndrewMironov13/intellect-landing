@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRight, Snowflake } from 'lucide-react'
-import { mainServices, moreServices, promo } from '@/content'
+import { mainServices, moreServices, promo, servicePages } from '@/content'
+import { asset } from '@/lib/asset'
 import { photo } from '@/lib/asset'
 import { scrollTo } from '@/lib/lead'
 import { Reveal } from './Reveal'
@@ -19,9 +20,9 @@ export function Services() {
           <div className="head head--split">
             <div>
               <p className="eyebrow">Услуги и цены</p>
-              <h2 className="h2" style={{ marginTop: 16 }}>Три вещи, за которыми к нам едут</h2>
+              <h2 className="h2" style={{ marginTop: 16 }}>Оклейка, тонировка и автозапуск: цены</h2>
             </div>
-            <p className="lead">Точную цену назовём после осмотра: зависит от размера машины и выбранной плёнки</p>
+            <p className="lead">Точную цену назовём после осмотра: зависит от размера машины и выбранной плёнки. Подробно о каждой услуге — на отдельных страницах: {servicePages.map((p, i) => <span key={p.slug}>{i > 0 && ', '}<a href={asset(`${p.slug}.html`)} style={{ color: 'var(--accent)' }}>{p.nav.toLowerCase()}</a></span>)}</p>
           </div>
         </Reveal>
 
@@ -37,6 +38,7 @@ export function Services() {
               <h3 className="svc__title">{s.title}</h3>
               <p className="svc__text">{s.text}</p>
               <span className="svc__cta">{s.cta} <ArrowRight /></span>
+              {s.page && <a className="svc__more" href={asset(`${s.page}.html`)}>Подробнее об услуге и ценах →</a>}
               <a className="svc__link" href={s.href} onClick={go(s.href)} aria-label={`${s.title}: ${s.cta}`} />
             </motion.article>
           ))}

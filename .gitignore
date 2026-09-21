@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 assets-src/
+
+# генерируются из src/content.ts
+okleyka.html
+tonirovka.html
+avtozapusk.html

@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build && python3 scripts/prerender.py dist",
+    "dev": "node scripts/gen-pages.mjs && vite",
+    "build": "node scripts/gen-pages.mjs && tsc -b && vite build && python3 scripts/prerender.py dist",
     "lint": "oxlint",
     "preview": "vite preview",
-    "build:nopre": "tsc -b && vite build"
+    "build:nopre": "node scripts/gen-pages.mjs && tsc -b && vite build",
+    "pages": "node scripts/gen-pages.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.47.0",

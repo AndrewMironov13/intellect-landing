@@ -419,3 +419,41 @@ html.js [data-prerender] .hero { visibility: hidden; }
 @media (max-width: 759px) {
   .h1--a { font-size: clamp(40px, 12.4vw, 52px); }
 }
+
+/* страницы услуг */
+.page { padding: calc(var(--nav-h) + 40px) 0 80px; }
+.page__inner { max-width: 860px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; color: var(--dim); font-size: 13px; margin-bottom: 22px; }
+.crumbs a:hover { color: #fff; }
+.page__h1 { margin-top: 14px; }
+.page__lead { margin-top: 16px; }
+.page__cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 8px; }
+.page__p { color: #d6d6d6; font-size: 16px; line-height: 1.65; margin-top: 16px; max-width: 70ch; }
+.page__h2 { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -0.02em; margin: 48px 0 16px; }
+.page__grid { display: grid; gap: 12px; }
+@media (min-width: 700px) { .page__grid { grid-template-columns: 1fr 1fr; } }
+.page__card { padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.page__card b { display: block; font-family: var(--display); font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+.page__card p { color: var(--muted); font-size: 14px; line-height: 1.55; }
+.page__note { color: var(--muted); font-size: 14px; line-height: 1.55; margin-top: 12px; }
+.page__note a { color: var(--accent); }
+.page__steps { margin: 0; padding-left: 22px; display: grid; gap: 10px; color: #d6d6d6; font-size: 16px; line-height: 1.55; }
+.page__steps li::marker { color: var(--accent); font-weight: 700; }
+.page__reviews { display: grid; gap: 12px; }
+@media (min-width: 700px) { .page__reviews { grid-template-columns: 1fr 1fr; } }
+blockquote.review { margin: 0; }
+.page__final { margin-top: 56px; padding-top: 8px; border-top: 1px solid var(--line); }
+
+/* FAQ */
+.faq { display: grid; gap: 8px; }
+.faq__item { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 0 20px; }
+.faq__item summary { cursor: pointer; list-style: none; padding: 16px 0; font-weight: 600; font-size: 16px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after { content: '+'; flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--accent); font-weight: 400; transition: transform .3s var(--ease); }
+.faq__item[open] summary::after { transform: rotate(45deg); }
+.faq__item p { color: #d0d0d0; font-size: 15px; line-height: 1.6; padding: 0 0 18px; max-width: 70ch; }
+.svc__more { position: relative; z-index: 4; margin-top: 10px; font-size: 13px; color: var(--muted); }
+.svc__more:hover { color: #fff; }
+.footer__links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; }
+
+@media (max-width: 759px) { .page__h1 { font-size: clamp(26px, 7.4vw, 34px); } }

@@ -7,6 +7,7 @@ import { Constructor } from '@/components/Constructor'
 import { Works } from '@/components/Works'
 import { Reviews } from '@/components/Reviews'
 import { About } from '@/components/About'
+import { Faq } from '@/components/Faq'
 import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
 
@@ -23,6 +24,7 @@ export default function App() {
         <Works />
         <Reviews />
         <About />
+        <Faq />
         <Contact />
       </main>
       <Footer />

@@ -31,6 +31,22 @@ npm run build:nopre   # без пререндера
 robots.txt с Allow и sitemap.xml. Без неё robots.txt = `Disallow: /` (демо-копия не индексируется).
 `VITE_BASE=/repo` для GitHub Pages.
 
+## SEO-архитектура (21.09.2026)
+
+- **Страницы услуг** `okleyka.html`, `tonirovka.html`, `avtozapusk.html` генерируются из `servicePages` в
+  `src/content.ts` скриптом `scripts/gen-pages.mjs` (Node 24 читает TS сам). Статический HTML, без React:
+  H1 с городом, интро, «что делаем», цены, шаги, 2 отзыва, FAQ, CTA на главную `#contact`. В .gitignore.
+- **Метатеги** главной — `seo` в content.ts (title 66, description с ценами и рейтингом, keywords по
+  подсказкам Яндекса для lr=47, гео Автозаводского района). Плагин `intellect-seo` в `vite.config.ts`
+  подставляет их в `__TITLE__`/`__DESC__` и добавляет canonical/og:url/geo/JSON-LD на каждую страницу.
+- **JSON-LD** одним `@graph`: главная — AutoRepair+LocalBusiness (адрес, гео, часы, рейтинг, 3 отзыва,
+  каталог услуг с ценами) + FAQPage; страницы услуг — Service + FAQPage + BreadcrumbList + бизнес.
+- **FAQ** на главной (`Faq.tsx`, 6 вопросов из `faq`) и по 4 на каждой странице услуги.
+- **Перелинковка:** карточки услуг → «Подробнее об услуге», лид услуг, футер, между страницами услуг.
+- **robots/sitemap** — все 5 страниц с lastmod и priority, только при `VITE_SITE_URL` без `VITE_NOINDEX`.
+- Значок «Рейтинг 4,8 · N отзывов об услугах» в сниппете Яндекса даёт НЕ разметка, а привязка сайта к
+  карточке Яндекс Бизнеса — сделать в день домена.
+
 ## SEO (18.09.2026)
 
 - Пререндер: после сборки `scripts/prerender.py` открывает dist в headless Chrome с prefers-reduced-motion
@@ -51,6 +67,15 @@ robots.txt с Allow и sitemap.xml. Без неё robots.txt = `Disallow: /` (д
 - Шрифты: Unbounded (дисплей, совпадает с жирным логотипом на стене) + Onest (текст). Оба с кириллицей, Google Fonts.
 - Подпись: сотовый свет бокса. Hero — canvas-решётка шестиугольников, зажигается волной при загрузке и светится под курсором (`HexLattice.tsx`). Один canvas, рисует только пока что-то меняется.
 - Секции: hero → бегущая строка услуг → 3 главные услуги + прайс → зима/автозапуск (счётчик −18° → +22°) → конструктор оклейки → работы (лайтбокс) → отзывы → запись + карта → футер.
+
+## Чеклист дня домена
+
+1. `VITE_SITE_URL=https://домен` (без `VITE_NOINDEX`) → сборка даёт canonical, robots Allow, sitemap.
+2. Яндекс Вебмастер: подтвердить права (мета-тег в `index.html`), регион «Нижний Новгород», отдать sitemap.
+3. Яндекс Бизнес: в карточке заменить визитку clients.site на сайт — оттуда рейтинг в сниппет.
+4. Метрика: номер счётчика в `metrika.id` (content.ts), проверить цели phone/form/calc/messenger/map.
+5. Google Search Console — по желанию, тот же sitemap.
+6. Демо на GitHub Pages заменить редиректом на домен.
 
 ## Что не подтверждено заказчиком (см. `PRICE_UNCONFIRMED` в content.ts)
 
