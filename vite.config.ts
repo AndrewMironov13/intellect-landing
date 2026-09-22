@@ -20,8 +20,8 @@ function business() {
   return {
     '@type': ['AutoRepair', 'LocalBusiness'],
     '@id': ID,
-    name: `Автостудия ${brand.name}`,
-    alternateName: ['Интеллект', 'Автостудия Интеллект', 'Intellect Detailing'],
+    name: 'Автостудия «Интеллект»',
+    alternateName: ['Интеллект', 'Intellect', 'Интеллект детейлинг', 'Intellect Detailing', 'Автостудия Intellect'],
     description: seo.description,
     url: abs('/'),
     image: abs('/og.jpg'),
@@ -74,21 +74,22 @@ function seoPlugin(): Plugin {
       }
       if (metrika.id) {
         tags.push({ tag: 'noscript', children: `<div><img src="https://mc.yandex.ru/watch/${metrika.id}" style="position:absolute;left:-9999px" alt="" /></div>`, injectTo: 'body-prepend' })
-        if (file !== 'index.html') tags.push({ tag: 'script', children: `if(!['localhost','127.0.0.1'].includes(location.hostname)){(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=${metrika.id}','ym');ym(${metrika.id},'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});}`, injectTo: 'head' })
+        if (file === 'privacy.html') tags.push({ tag: 'script', children: `if(!['localhost','127.0.0.1'].includes(location.hostname)){(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=${metrika.id}','ym');ym(${metrika.id},'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});}`, injectTo: 'head' })
       }
       if (file === 'privacy.html') return { html, tags }
+      // пререндер для краулеров без JS: фрагменты собираются локально (npm run prerender) и коммитятся
+      const fragFile = file === 'index.html' ? 'prerender/root.html' : `prerender/${file}`
+      if (process.env.PRERENDER_SKIP !== '1') {
+        if (existsSync(fragFile)) {
+          const frag = readFileSync(fragFile, 'utf8').replace(/__BASE__/g, BASE)
+          html = html.replace('<div id="root"></div>', `<div id="root"><div data-prerender>${frag}</div></div>`)
+        } else this.warn(`${fragFile} не найден — краулеры без JS увидят пустую страницу. Запусти npm run prerender`)
+      }
       meta({ property: 'og:image', content: abs('/og.jpg') }); meta({ property: 'og:image:width', content: '1200' }); meta({ property: 'og:image:height', content: '630' })
       meta({ name: 'twitter:card', content: 'summary_large_image' })
       meta({ name: 'geo.region', content: 'RU-NIZ' }); meta({ name: 'geo.placename', content: brand.city }); meta({ name: 'geo.position', content: `${seo.geo.lat};${seo.geo.lon}` }); meta({ name: 'ICBM', content: `${seo.geo.lat}, ${seo.geo.lon}` })
       if (file === 'index.html') {
         html = html.replace(/__TITLE__/g, seo.title).replace(/__DESC__/g, seo.description)
-        // пререндер для краулеров без JS: фрагмент собирается локально (npm run prerender) и коммитится
-        if (process.env.PRERENDER_SKIP !== '1' && existsSync('prerender/root.html')) {
-          const frag = readFileSync('prerender/root.html', 'utf8').replace(/__BASE__/g, BASE)
-          html = html.replace('<div id="root"></div>', `<div id="root"><div data-prerender>${frag}</div></div>`)
-        } else if (process.env.PRERENDER_SKIP !== '1') {
-          this.warn('prerender/root.html не найден — краулеры без JS увидят пустую страницу. Запусти npm run prerender')
-        }
         meta({ name: 'keywords', content: seo.keywords })
         tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'image', href: `${BASE}/photos/${hero.photo}.webp`, fetchpriority: 'high' }, injectTo: 'head' })
         tags.push({ tag: 'script', attrs: { type: 'application/ld+json' }, children: graph([business(), faqLd(faq)]), injectTo: 'head' })
@@ -96,6 +97,7 @@ function seoPlugin(): Plugin {
         const sp = servicePages.find((p: { slug: string }) => `${p.slug}.html` === file)
         if (sp) {
           meta({ name: 'keywords', content: seo.keywords })
+          if (sp.hero.photo) tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'image', href: `${BASE}/photos/${sp.hero.photo}.webp`, fetchpriority: 'high' }, injectTo: 'head' })
           tags.push({ tag: 'script', attrs: { type: 'application/ld+json' }, children: graph([
             { '@type': 'Service', name: sp.h1, description: sp.description, areaServed: brand.city, provider: { '@id': ID }, url: abs(`/${sp.slug}.html`) },
             faqLd(sp.faq), crumbsLd(sp.nav, `/${sp.slug}.html`), business(),

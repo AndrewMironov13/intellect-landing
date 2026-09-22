@@ -10,9 +10,9 @@ import { goal } from '@/lib/metrika'
 
 type Status = 'idle' | 'sending' | 'ok' | 'error'
 
-export function Contact() {
+export function Contact({ defaultService }: { defaultService?: string }) {
   const [status, setStatus] = useState<Status>('idle')
-  const [service, setService] = useState(contact.services[0])
+  const [service, setService] = useState(defaultService ?? contact.services[0])
   const [comment, setComment] = useState('')
   const [mapOn, setMapOn] = useState(false)
 
@@ -93,7 +93,7 @@ export function Contact() {
                 <Messengers extra={comment ? comment : 'Хочу '} />
               </div>
               <div className="map">
-                {mapOn ? <iframe src={mapSrc} title="Автостудия Intellect на карте" loading="lazy" allowFullScreen /> : (
+                {mapOn ? <iframe src={mapSrc} title="Автостудия «Интеллект» на карте" loading="lazy" allowFullScreen /> : (
                   <button className="map__lock" onClick={() => { setMapOn(true); goal('map') }} aria-label="Показать карту">
                     <span className="btn btn--ghost"><MapPin size={18} /> Показать на карте</span>
                   </button>

@@ -17,6 +17,8 @@ except ImportError:
 
 DIST = sys.argv[1] if len(sys.argv) > 1 else 'dist'
 BASE = (sys.argv[2] if len(sys.argv) > 2 else os.environ.get('VITE_BASE', '/')).rstrip('/') + '/'
+# (путь, текст-маркер отрисовки, файл фрагмента)
+PAGES = [('', 'Оклейка.', 'root.html'), ('okleyka.html', 'полиуретановой плёнкой', 'okleyka.html'), ('tonirovka.html', 'Тонировка авто', 'tonirovka.html'), ('avtozapusk.html', 'с автозапуском', 'avtozapusk.html')]
 CHROME = next((p for p in ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', shutil.which('google-chrome') or '', shutil.which('chromium') or ''] if p and os.path.exists(p)), None)
 if not CHROME: sys.exit('Chrome не найден')
 
@@ -42,6 +44,7 @@ async def main():
     srv = subprocess.Popen([sys.executable, '-m', 'http.server', str(http_port), '--bind', '127.0.0.1', '--directory', serve_dir], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     prof = tempfile.mkdtemp(prefix='prerender-chrome-')
     chrome = subprocess.Popen([CHROME, '--headless=new', f'--remote-debugging-port={cdp_port}', f'--user-data-dir={prof}', '--window-size=1440,900', '--hide-scrollbars', 'about:blank'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    results = []
     try:
         t = page_target(cdp_port)
         if not t: sys.exit('CDP: вкладка не найдена')
@@ -56,11 +59,13 @@ async def main():
             await cmd('Page.enable'); await cmd('Runtime.enable')
             await cmd('Emulation.setDeviceMetricsOverride', width=1440, height=900, deviceScaleFactor=1, mobile=False)
             await cmd('Emulation.setEmulatedMedia', features=[{'name': 'prefers-reduced-motion', 'value': 'reduce'}])
-            await cmd('Page.navigate', url=f'http://127.0.0.1:{http_port}{BASE}')
-            await asyncio.sleep(5)  # отложенные картинки ставят src через 3,5 с
-            r = await cmd('Runtime.evaluate', expression="(()=>{const r=document.getElementById('root'); if(!r||!r.children.length) return ''; return r.innerHTML})()", returnByValue=True)
-            html = r.get('result', {}).get('value', '')
-            if not html or 'Оклейка' not in html: sys.exit('пререндер: страница не отрендерилась')
+            for page, marker, out in PAGES:
+                await cmd('Page.navigate', url=f'http://127.0.0.1:{http_port}{BASE}{page}')
+                await asyncio.sleep(5)  # отложенные картинки ставят src через 3,5 с
+                r = await cmd('Runtime.evaluate', expression="(()=>{const r=document.getElementById('root'); if(!r||!r.children.length) return ''; return r.innerHTML})()", returnByValue=True)
+                html = r.get('result', {}).get('value', '')
+                if not html or marker not in html: sys.exit(f'пререндер: {page or "/"} не отрендерилась')
+                results.append((page, out, html))
     finally:
         chrome.send_signal(signal.SIGTERM); srv.send_signal(signal.SIGTERM)
         chrome.wait(timeout=5); srv.wait(timeout=5)
@@ -68,13 +73,14 @@ async def main():
         if serve_dir != root: shutil.rmtree(serve_dir, ignore_errors=True)
     # фрагмент не зависит от base-пути хостинга: base заменяем токеном, плагин подставит свой
     base_prefix = BASE.rstrip('/')
-    frag = html.replace(f'src="{base_prefix}/', 'src="__BASE__/').replace(f'href="{base_prefix}/', 'href="__BASE__/') if base_prefix else html.replace('src="/', 'src="__BASE__/').replace('href="/', 'href="__BASE__/')
     os.makedirs('prerender', exist_ok=True)
-    open(os.path.join('prerender', 'root.html'), 'w', encoding='utf-8').write(frag)
-    idx = os.path.join(root, 'index.html'); s = open(idx, encoding='utf-8').read()
-    if '<div id="root"></div>' in s:
-        s = s.replace('<div id="root"></div>', f'<div id="root"><div data-prerender>{html}</div></div>')
-        open(idx, 'w', encoding='utf-8').write(s)
-    print(f'пререндер: {len(html)//1024} КБ → prerender/root.html (и вшито в {idx})')
+    for page, out, html in results:
+        frag = html.replace(f'src="{base_prefix}/', 'src="__BASE__/').replace(f'href="{base_prefix}/', 'href="__BASE__/') if base_prefix else html.replace('src="/', 'src="__BASE__/').replace('href="/', 'href="__BASE__/')
+        open(os.path.join('prerender', out), 'w', encoding='utf-8').write(frag)
+        idx = os.path.join(root, page or 'index.html'); s = open(idx, encoding='utf-8').read()
+        if '<div id="root"></div>' in s:
+            s = s.replace('<div id="root"></div>', f'<div id="root"><div data-prerender>{html}</div></div>')
+            open(idx, 'w', encoding='utf-8').write(s)
+        print(f'пререндер: {page or "/"} {len(html)//1024} КБ → prerender/{out}')
 
 asyncio.run(main())

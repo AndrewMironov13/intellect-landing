@@ -25,7 +25,7 @@ dist-ssr
 assets-src/
 
 # генерируются из src/content.ts
-okleyka.html
-tonirovka.html
-avtozapusk.html
+/okleyka.html
+/tonirovka.html
+/avtozapusk.html
 dist-root
