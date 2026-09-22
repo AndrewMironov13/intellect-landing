@@ -7,9 +7,17 @@ Vite + React 19 + TypeScript, анимации `motion/react` (не framer-motio
 
 - Тип Frontend, команда `npm run build`, **каталог сборки `dist`** (пресет React подставляет `build` — ловушка), Node 24.
 - Переменные окружения: `VITE_SITE_URL=https://домен` и больше ничего (`VITE_BASE`/`VITE_NOINDEX` — только для демо на GitHub Pages).
-- Chrome на хостинге не нужен: пререндер лежит в репозитории (`prerender/root.html`, base-путь заменён токеном
-  `__BASE__`), vite-плагин вшивает его в `index.html`. **После любой правки контента запускать локально
-  `npm run prerender` и коммитить обновлённый `prerender/root.html`**, иначе краулеры без JS увидят старый текст.
+- Chrome на хостинге не нужен: пререндер лежит в репозитории (`prerender/root.html` для главной и
+  `prerender/<slug>.html` для услуг, base-путь заменён токеном `__BASE__`), vite-плагин вшивает его в каждую
+  страницу. **После любой правки контента запускать локально `npm run prerender` и коммитить все
+  `prerender/*.html`**, иначе краулеры без JS увидят старый текст. В `.gitignore` оболочки услуг только
+  от корня (`/okleyka.html`) — шаблон без слэша глушил и фрагменты пререндера (поймано 22.09).
+- Сервер Timeweb (Caddy) отдаёт JS **без сжатия и без cache-control**: 433 КБ, на мобильном 3–5 с. Поэтому
+  hero-пререндер открывается CSS-таймером через 1,2 с (`prerender-reveal` в styles.css), а `src/lib/late.ts`
+  отключает повторную входную анимацию, если React пришёл позже. Проверено сервером с задержкой JS 4 с.
+- Деплой сама: `scripts/deploy.sh <sha>` или MCP `timeweb-cloud` → `create_app_deploy` (app 257841,
+  полный SHA, подтверждение токеном). Переобход: IndexNow-ключ `public/e0e3dff3ff96c3d99259076bf7a01baa.txt`,
+  `GET https://yandex.com/indexnow?url=<url>&key=<ключ>` (200/202 = принято).
 - `.env.example` — образец переменных.
 
 ## Где живёт
@@ -44,9 +52,14 @@ robots.txt с Allow и sitemap.xml. Без неё robots.txt = `Disallow: /` (д
 
 ## SEO-архитектура (21.09.2026)
 
-- **Страницы услуг** `okleyka.html`, `tonirovka.html`, `avtozapusk.html` генерируются из `servicePages` в
-  `src/content.ts` скриптом `scripts/gen-pages.mjs` (Node 24 читает TS сам). Статический HTML, без React:
-  H1 с городом, интро, «что делаем», цены, шаги, 2 отзыва, FAQ, CTA на главную `#contact`. В .gitignore.
+- **Страницы услуг** `okleyka.html`, `tonirovka.html`, `avtozapusk.html` — React (`src/service.tsx` →
+  `ServicePage.tsx`) в стиле главной (22.09): hero с фото и сотами (`ServiceHero`, у автозапуска вместо фото
+  −18° → +22°), интро, «что делаем», конструктор (только оклейка), цены, шаги, работы, отзывы, FAQ, форма,
+  другие услуги. Оболочки HTML с title/description пишет `scripts/gen-pages.mjs` из `servicePages`
+  (в .gitignore), контент — пререндер из `prerender/<slug>.html`.
+- **Бренд кириллицей:** title главной «Интеллект — детейлинг в Нижнем Новгороде…», у услуг «| Интеллект»,
+  JSON-LD alternateName. До 22.09 в title было только латинское Intellect, и по запросу «интеллект» Яндекс
+  показывал страницу оклейки — единственную проиндексированную.
 - **Метатеги** главной — `seo` в content.ts (title 66, description с ценами и рейтингом, keywords по
   подсказкам Яндекса для lr=47, гео Автозаводского района). Плагин `intellect-seo` в `vite.config.ts`
   подставляет их в `__TITLE__`/`__DESC__` и добавляет canonical/og:url/geo/JSON-LD на каждую страницу.
