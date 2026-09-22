@@ -5,6 +5,7 @@ import { hero } from '@/content'
 import { photo } from '@/lib/asset'
 import { scrollTo } from '@/lib/lead'
 import { HexLattice } from './HexLattice'
+import { lateStart } from '@/lib/late'
 
 const EASE = [0.2, 0.7, 0.2, 1] as const
 
@@ -27,25 +28,26 @@ export function Hero() {
     my.set(((e.clientY - r.top) / r.height - 0.5) * 2)
   }
   const onLeave = () => { mx.set(0); my.set(0) }
+  const still = reduce || lateStart
 
   const lines = { hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.45 } } }
   const line = { hidden: { y: '112%' }, show: { y: '0%', transition: { duration: 1, ease: EASE } } }
   const fade = (delay: number) => ({
-    initial: reduce ? false : { opacity: 0, y: 14 },
+    initial: still ? false : { opacity: 0, y: 14 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.9, delay, ease: EASE },
   })
 
   return (
     <section className="hero" id="top" ref={host} onPointerMove={onMove} onPointerLeave={onLeave}>
-      <motion.div className="hero__photo" initial={reduce ? false : { opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.8, ease: EASE }}>
+      <motion.div className="hero__photo" initial={still ? false : { opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.8, ease: EASE }}>
         <motion.img src={photo(heroPhoto)} alt={hero.photoAlt} style={{ x: tx, y: ty, scale: 1.05 }} fetchPriority="high" decoding="async" />
       </motion.div>
       <div className="hero__lattice"><HexLattice hostRef={host} /></div>
 
       <div className="container hero__body">
         <motion.p className="eyebrow hero__eyebrow" {...fade(0.25)}>{hero.eyebrow}</motion.p>
-        <motion.h1 className="h1 h1--a" variants={lines} initial={reduce ? 'show' : 'hidden'} animate="show">
+        <motion.h1 className="h1 h1--a" variants={lines} initial={still ? 'show' : 'hidden'} animate="show">
           {hero.words.map((w, i) => (
             <span className="line" key={w}><motion.span variants={line} className={i === 2 ? 'h1__accent' : undefined}>{w}{i < hero.words.length - 1 ? ' ' : ''}</motion.span></span>
           ))}

@@ -370,8 +370,11 @@ h1, h2, h3, p { margin: 0; }
 @media (min-width: 960px) { .about__grid { grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: start; } }
 .about__text { display: grid; gap: 16px; color: #cfcfcf; font-size: 16px; line-height: 1.65; max-width: 62ch; }
 
-/* пререндер: до старта React прячем hero, чтобы текст не показывался дважды (краулеры без JS видят всё) */
-html.js [data-prerender] .hero { visibility: hidden; }
+/* пререндер: до старта React прячем hero, чтобы текст не показывался дважды (краулеры без JS видят всё).
+   Если скрипт не пришёл за 1,2 с (медленный мобильный), показываем готовый пререндер, а не пустой экран —
+   синхронно с PRERENDER_REVEAL_MS в src/lib/late.ts */
+html.js [data-prerender] .hero { visibility: hidden; animation: prerender-reveal 0s 1.2s forwards; }
+@keyframes prerender-reveal { to { visibility: visible; } }
 
 /* юридические страницы */
 .legal { padding: calc(var(--nav-h) + 48px) 0 80px; }

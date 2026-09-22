@@ -6,12 +6,13 @@ import { asset, photo } from '@/lib/asset'
 import { scrollTo } from '@/lib/lead'
 import { goal } from '@/lib/metrika'
 import { HexLattice } from './HexLattice'
+import { lateStart } from '@/lib/late'
 
 const EASE = [0.2, 0.7, 0.2, 1] as const
 
 /** Для автозапуска вместо фото — температура, которая теплеет от −18 до +22 */
 function HeroTemp() {
-  const reduce = useReducedMotion()
+  const reduce = useReducedMotion() || lateStart
   const v = useMotionValue(reduce ? winter.to : winter.from)
   const [warm, setWarm] = useState(!!reduce)
   useEffect(() => {
@@ -47,11 +48,12 @@ export function ServiceHero({ page }: { page: ServicePage }) {
     my.set(((e.clientY - r.top) / r.height - 0.5) * 2)
   }
   const onLeave = () => { mx.set(0); my.set(0) }
+  const still = reduce || lateStart
 
   const lines = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.4 } } }
   const line = { hidden: { y: '112%' }, show: { y: '0%', transition: { duration: 1, ease: EASE } } }
   const fade = (delay: number) => ({
-    initial: reduce ? false : { opacity: 0, y: 14 },
+    initial: still ? false : { opacity: 0, y: 14 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.9, delay, ease: EASE },
   })
@@ -60,7 +62,7 @@ export function ServiceHero({ page }: { page: ServicePage }) {
   return (
     <section className={`hero hero--svc${page.hero.winter ? ' hero--winter' : ''}`} id="top" ref={host} onPointerMove={onMove} onPointerLeave={onLeave}>
       {page.hero.photo ? (
-        <motion.div className="hero__photo" initial={reduce ? false : { opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.8, ease: EASE }}>
+        <motion.div className="hero__photo" initial={still ? false : { opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.8, ease: EASE }}>
           <motion.img src={photo(page.hero.photo)} alt={page.hero.alt} style={{ x: tx, y: ty, scale: 1.05, objectPosition: page.hero.pos }} fetchPriority="high" decoding="async" />
         </motion.div>
       ) : <HeroTemp />}
@@ -71,7 +73,7 @@ export function ServiceHero({ page }: { page: ServicePage }) {
           <a href={asset('')}>Главная</a><span>/</span><a href={asset('#services')}>Услуги</a><span>/</span><span aria-current="page">{page.nav}</span>
         </motion.nav>
         <motion.p className="eyebrow hero__eyebrow" {...fade(0.2)}>{page.eyebrow}</motion.p>
-        <motion.h1 className="h1 h1--svc" variants={lines} initial={reduce ? 'show' : 'hidden'} animate="show">
+        <motion.h1 className="h1 h1--svc" variants={lines} initial={still ? 'show' : 'hidden'} animate="show">
           {page.h1Lines.map((l, i) => (
             <span className="line" key={l}><motion.span variants={line} className={i === last ? 'h1__accent' : undefined}>{l}{i < last ? ' ' : ''}</motion.span></span>
           ))}
