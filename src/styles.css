@@ -418,9 +418,10 @@ html.js [data-prerender] .hero { visibility: hidden; animation: prerender-reveal
 .burger { width: 40px; height: 40px; }
 @media (min-width: 980px) { .qbtn--phone { display: none; } .nav__quick { order: 1; } .nav__phone { order: 0; } .nav__cta { order: 2; } }
 @media (max-width: 400px) { .logo { font-size: 19px; } .nav__inner { gap: 10px; } .nav__right { gap: 10px; } }
+@media (max-width: 350px) { .logo { font-size: 17px; } .nav__right { gap: 6px; } .nav__quick { gap: 4px; } .qbtn { width: 34px; height: 34px; } .qbtn svg { width: 16px; height: 16px; } .burger { width: 36px; height: 36px; } }
 
 @media (max-width: 759px) {
-  .h1--a { font-size: clamp(40px, 12.4vw, 52px); }
+  .h1--a { font-size: clamp(34px, 11.5vw, 52px); }
 }
 
 /* страницы услуг */
@@ -493,7 +494,7 @@ html.js [data-prerender] .hero { visibility: hidden; animation: prerender-reveal
 @media (min-width: 900px) { .svc-grid--two { grid-template-columns: repeat(2, 1fr); } }
 
 @media (max-width: 759px) {
-  .h1--svc { font-size: clamp(30px, 8.6vw, 40px); }
+  .h1--svc { font-size: clamp(26px, 8.2vw, 40px); }
   .hero--svc .hero__photo { height: 52svh; min-height: 320px; }
   .hero--svc .hero__lattice { height: 52svh; min-height: 320px; }
   .hero--svc .hero__body { margin-top: -80px; }
