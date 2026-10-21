@@ -8,7 +8,7 @@ export function Footer({ home = true }: { home?: boolean }) {
     <footer className="footer">
       <div className="container footer__inner">
         <Logo home={home} />
-        <nav className="footer__links" aria-label="Услуги">{servicePages.map((p) => <a key={p.slug} href={asset(`${p.slug}.html`)}>{p.nav}</a>)}</nav>
+        <nav className="footer__links" aria-label="Услуги и статьи">{servicePages.map((p) => <a key={p.slug} href={asset(`${p.slug}.html`)}>{p.nav}</a>)}<a href={asset('blog/')}>Статьи</a></nav>
         <span>{brand.legal}{brand.inn ? `, ИНН ${brand.inn}` : ''} · {brand.city}, {brand.address}</span>
         <span><a href={brand.phoneHref} onClick={() => goal('phone', { where: 'footer' })}>{brand.phone}</a> · <a href={brand.vk} target="_blank" rel="noopener">ВКонтакте</a></span>
         <a className="footer__legal" href={asset(contact.privacyPath)}>Политика конфиденциальности</a>

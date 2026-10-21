@@ -1,0 +1,149 @@
+/* Статьи «Интеллекта»: те же токены, шрифты и логотип, что на сайте (src/styles.css), без React и без JS */
+@font-face { font-family: 'Unbounded'; font-weight: 700; font-display: swap; src: url('./unbounded-700-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Unbounded'; font-weight: 700; font-display: swap; src: url('./unbounded-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Onest'; font-weight: 400; font-display: swap; src: url('./onest-400-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Onest'; font-weight: 400; font-display: swap; src: url('./onest-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Onest'; font-weight: 500; font-display: swap; src: url('./onest-500-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Onest'; font-weight: 500; font-display: swap; src: url('./onest-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Onest'; font-weight: 600; font-display: swap; src: url('./onest-600-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Onest'; font-weight: 600; font-display: swap; src: url('./onest-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+FEFF, U+FFFD; }
+
+:root {
+  color-scheme: dark;
+  --bg: #141414;
+  --bg-2: #1a1a1a;
+  --surface: #1f1f1f;
+  --card: #242424;
+  --line: #303030;
+  --line-2: #474747;
+  --text: #f4f4f4;
+  --muted: #a9a9a9;
+  --dim: #707070;
+  --accent: #2ec8c6;
+  --accent-2: #63dcda;
+  --accent-ink: #0b1a1a;
+  --display: 'Unbounded', 'Onest', sans-serif;
+  --body: 'Onest', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; scroll-padding-top: 90px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.7 var(--body); }
+@media (min-width: 640px) { body { font-size: 18px; } }
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent-2); }
+p, li, blockquote { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.nw { white-space: nowrap; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Логотип как на сайте: «intellect» в уголках и бирюзовая точка */
+.logo { display: inline-flex; align-items: baseline; gap: 6px; font: 700 21px/1 var(--display); letter-spacing: -0.01em; color: #fff; text-decoration: none; }
+.logo:hover { color: #fff; }
+.logo__mark { position: relative; padding: 4px 6px; }
+.logo__mark::before, .logo__mark::after { content: ''; position: absolute; width: 9px; height: 9px; border: 2px solid #fff; }
+.logo__mark::before { left: -2px; top: -2px; border-right: 0; border-bottom: 0; }
+.logo__mark::after { right: -2px; bottom: -2px; border-left: 0; border-top: 0; }
+.logo__dot { width: 8px; height: 8px; background: var(--accent); align-self: flex-end; margin-bottom: 2px; }
+
+/* Шапка */
+.top { position: sticky; top: 0; z-index: 10; background: rgba(20, 20, 20, .86); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1400px; margin: 0 auto; padding: 0 clamp(16px, 4.5vw, 72px); height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.links { display: none; gap: 4px; }
+.links a { padding: 8px 14px; border-radius: 999px; font-size: 15px; color: var(--muted); text-decoration: none; transition: color .2s, background-color .2s; }
+.links a:hover, .links a[aria-current] { color: var(--text); background: var(--surface); }
+.phone { display: inline-flex; align-items: center; height: 42px; padding: 0 18px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 600; font-size: 15px; text-decoration: none; transition: background-color .2s; }
+.phone:hover { background: var(--accent-2); color: var(--accent-ink); }
+@media (min-width: 900px) { .links { display: inline-flex; } }
+@media (max-width: 380px) { .logo { font-size: 18px; } .phone { padding: 0 12px; font-size: 14px; } }
+
+/* Статья */
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+.crumbs { margin: 36px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; font-size: 14px; color: var(--dim); }
+.crumbs li + li::before { content: '/'; margin-right: 6px; color: var(--line-2); }
+.crumbs a { text-decoration: none; color: var(--muted); }
+.crumbs a:hover { color: var(--accent-2); }
+h1 { font: 700 clamp(28px, 5.4vw, 46px)/1.14 var(--display); letter-spacing: -0.015em; margin: 18px 0 0; }
+.lead { margin: 18px 0 0; font-size: clamp(18px, 2.3vw, 20px); line-height: 1.55; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 22px 0 0; font-size: 14px; color: var(--dim); }
+.meta b { color: var(--text); font-weight: 500; font-size: 15px; }
+
+.body { margin-top: 34px; }
+.body > p, .body > ul, .body > ol { margin: 0 0 18px; }
+.body h2 { font: 700 clamp(22px, 3.4vw, 30px)/1.2 var(--display); letter-spacing: -0.01em; margin: 54px 0 16px; }
+.body h3 { font-size: 19px; line-height: 1.35; font-weight: 600; margin: 30px 0 8px; }
+.body ul, .body ol { padding-left: 0; list-style: none; }
+.body ul > li, .body ol > li { position: relative; padding-left: 30px; margin: 0 0 10px; }
+.body ul > li::before { content: ''; position: absolute; left: 8px; top: .62em; width: 9px; height: 10px; background: var(--accent); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.body ol { counter-reset: n; }
+.body ol > li { counter-increment: n; }
+.body ol > li::before { content: counter(n); position: absolute; left: 0; top: .2em; width: 22px; height: 22px; border-radius: 99px; border: 1px solid var(--line-2); font-size: 12px; font-weight: 600; line-height: 21px; text-align: center; color: var(--accent); }
+.body strong { font-weight: 600; color: #fff; }
+.body a { color: var(--accent); }
+.body a:hover { color: var(--accent-2); }
+.body blockquote { margin: 22px 0; padding: 4px 0 4px 18px; border-left: 2px solid var(--accent); color: var(--muted); }
+
+/* Оглавление */
+.toc { margin: 30px 0 0; padding: 18px 22px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.toc p { margin: 0 0 8px; font-size: 13px; color: var(--dim); letter-spacing: .12em; text-transform: uppercase; }
+.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: t; }
+.toc li { counter-increment: t; margin: 0; padding: 4px 0 4px 28px; position: relative; font-size: 16px; line-height: 1.4; }
+.toc li::before { content: counter(t); position: absolute; left: 0; color: var(--accent); font-variant-numeric: tabular-nums; }
+.toc a { text-decoration: none; color: var(--text); }
+.toc a:hover { color: var(--accent-2); }
+
+/* Цифры крупно */
+.stats { display: grid; gap: 10px; margin: 30px 0; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+.stat { padding: 20px 20px 18px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.stat b { display: block; font: 700 30px/1.05 var(--display); color: var(--accent); letter-spacing: -0.01em; }
+.stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; }
+.stat small { display: block; margin-top: 6px; font-size: 14px; color: var(--dim); }
+
+/* Таблица: на телефоне листается вбок внутри рамки */
+.table { margin: 24px 0; overflow-x: auto; border-radius: 14px; border: 1px solid var(--line); -webkit-overflow-scrolling: touch; }
+.table table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.table th { text-align: left; font-weight: 500; color: var(--muted); background: var(--surface); padding: 12px 14px; font-size: 14px; }
+.table td { padding: 12px 14px; border-top: 1px solid var(--line); }
+.table td:first-child { font-weight: 500; }
+/* В ячейках бывает и текст, и цифры: переносим по словам, а числа с ₽ держит неразрывный пробел из nb() */
+.table th, .table td { min-width: 104px; vertical-align: top; }
+@media (max-width: 480px) { .table table { font-size: 14px; } .table th, .table td { padding: 10px 10px; } }
+
+/* Запись */
+.cta { margin: 48px 0; padding: 30px 24px; border-radius: 20px; background: linear-gradient(140deg, rgba(46, 200, 198, .12), rgba(46, 200, 198, 0) 60%), var(--surface); border: 1px solid var(--line-2); }
+@media (min-width: 640px) { .cta { padding: 36px 36px; } }
+.cta h2 { font: 700 clamp(22px, 3.4vw, 30px)/1.2 var(--display); margin: 0; }
+.cta p { margin: 10px 0 0; color: var(--muted); font-size: 16px; }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 46px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--text); font-size: 15px; font-weight: 500; text-decoration: none; transition: background-color .2s, border-color .2s; }
+.btn:hover { background: var(--card); border-color: var(--muted); color: var(--text); }
+.btn--accent { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.btn--accent:hover { background: var(--accent-2); border-color: var(--accent-2); color: var(--accent-ink); }
+
+/* Автор, другие статьи */
+.author { margin: 48px 0 0; padding: 20px 22px; border-radius: 16px; border: 1px solid var(--line); }
+.author b { display: block; font-weight: 600; }
+.author p { margin: 6px 0 0; font-size: 15px; color: var(--muted); line-height: 1.55; }
+.author a { color: var(--accent); }
+.updated { margin: 24px 0 0; font-size: 14px; color: var(--dim); }
+.more { margin-top: 56px; }
+.more > h2 { font: 700 24px/1.2 var(--display); margin: 0; }
+
+/* Список статей */
+.cards { display: grid; gap: 12px; margin: 30px 0 0; }
+.card { display: block; padding: 22px 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); text-decoration: none; transition: border-color .2s, background-color .2s; }
+.card:hover { border-color: var(--accent); background: var(--card); color: var(--text); }
+.card h2 { font: 700 clamp(18px, 2.6vw, 22px)/1.25 var(--display); margin: 0; }
+.card p { margin: 10px 0 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.card small { display: block; margin-top: 12px; font-size: 13px; color: var(--dim); }
+
+/* Подвал как на сайте */
+.foot { margin-top: 80px; border-top: 1px solid var(--line); }
+.foot-in { max-width: 1400px; margin: 0 auto; padding: 40px clamp(16px, 4.5vw, 72px) 48px; display: flex; flex-direction: column; gap: 14px; font-size: 14px; color: var(--dim); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.foot-links a { color: var(--muted); text-decoration: none; font-size: 15px; }
+.foot a:hover { color: var(--accent-2); }
+.foot .legal { color: var(--dim); }
